@@ -9,7 +9,12 @@ botonaso.addEventListener("click", () => {
       break;
     case 2:
       location.href = "../ejerciciosProg/evaluacion.html";
+      break;
+    case 3:
+      location.href = "../ejerciciosProg/convertirTexto.html";
+      break;
     default:
       console.log("que onda we no carga");
+      break;
   }
 });
