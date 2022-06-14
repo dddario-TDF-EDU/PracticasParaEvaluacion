@@ -1,4 +1,5 @@
 let botonaso = document.getElementById("ingreso");
+let numIngresado = document.getElementById("numIngresado");
 
 function verificacionNumero(numLocal: number): boolean {
   let datoValido: boolean = !isNaN(numLocal);
@@ -10,7 +11,7 @@ function verificacionNumero(numLocal: number): boolean {
 
 function asignarBoolean(): boolean {
   let valorBoolean: boolean;
-  let valor: number = Math.floor(Math.random() * (2 - 0) + 0);
+  let valor: number = Math.floor(Math.random() * 2);
   if (valor === 1) {
     valorBoolean = true;
   } else {
@@ -20,35 +21,34 @@ function asignarBoolean(): boolean {
 }
 
 function cargaButacas(arrayButaca: boolean[]) {
-  let longitudArray: number = arrayButaca.length - 1;
-  for (let elemento: number = 0; elemento <= longitudArray; elemento++) {
-    arrayButaca[elemento] = asignarBoolean();
+  let longitudArray: number = arrayButaca.length;
+  for (let indice: number = 0; indice < longitudArray; indice++) {
+    arrayButaca[indice] = asignarBoolean();
   }
 }
 
-function contarButacas(arrayButaca: boolean[]) {
-  let longitudArray: number = arrayButaca.length - 1;
-  let butacaOcupada: number = 0;
-  let butacaDesocupada: number = 0;
-  for (let elemento: number = 0; elemento <= longitudArray; elemento++) {
-    if (arrayButaca[elemento] === true) {
-      butacaOcupada++;
-    } else {
-      butacaDesocupada++;
+function contarButacasDesocupadas(arrayButaca: boolean[]) {
+  let longitudArray: number = arrayButaca.length;
+  let cantidadButacasDesocupadas: number = 0;
+  for (let elemento: number = 0; elemento < longitudArray; elemento++) {
+    if (arrayButaca[elemento] === false) {
+      cantidadButacasDesocupadas++;
     }
   }
-  console.log("La cantidad de butacas ocupadas es: " + butacaOcupada);
-  console.log("La cantidad de butacas desocupadas es: " + butacaDesocupada);
+  return cantidadButacasDesocupadas;
 }
 
 botonaso.addEventListener("click", () => {
+  let numeroButacas: number = Number(numIngresado.value);
   let numeroValido: boolean;
-  numeroValido = verificacionNumero(Number(numIngresado.value));
+  numeroValido = verificacionNumero(numeroButacas);
   if (numeroValido === true) {
-    let cantidadButacas: boolean = new Array(Number(numIngresado.value));
-    cargaButacas(cantidadButacas);
-    contarButacas(cantidadButacas);
-    console.log("La cantidad de butacas es: " + cantidadButacas.length);
+    let butacas: boolean[] = new Array(numeroButacas);
+    let butacasDesocupadas: number = 0;
+    cargaButacas(butacas);
+    butacasDesocupadas = contarButacasDesocupadas(butacas);
+    console.log("La cantidad de butacas es: " + butacas.length);
+    console.log("La cantidad de butacas desocupadas es: " + butacasDesocupadas);
   } else {
     console.log("El dato ingresado no es correcto, intentelo nuevamente");
   }
